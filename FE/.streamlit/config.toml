@@ -1,0 +1,38 @@
+# .streamlit/config.toml
+
+[server]
+enableStaticServing = true
+
+[[theme.fontFaces]]
+family = "varta"
+url = "app/static/Varta-Regular.woff2"
+style = "normal"
+weight = 400
+
+[[theme.fontFaces]]
+family = "varta"
+url = "app/static/Varta-Bold.woff2"
+style = "normal"
+weight = 700
+
+# [[theme.fontFaces]]
+# family = "varta"
+# url = "app/static/URWVarta-LightItalic.woff2"
+# style = "italic"
+# weight = 400
+
+# [[theme.fontFaces]]
+# family = "varta"
+# url = "app/static/URWVarta-DemiItalic.woff2"
+# style = "italic"
+# weight = 700
+
+[theme]
+base = "light"
+backgroundColor = "#FDF9ED"
+secondaryBackgroundColor = "#ffffff" # Background for input widgets, etc.
+font = "varta, sans-serif"       # fallback to sans-serif if varta unavailable
+# font = "Trebushet MS, Tahoma, Verdana, Arial, Helvetica, sans-serif"
+baseFontSize = 18             # 18px
+baseFontWeight = 400          # normal weight
+textColor = "#222222"         # color: rgb(34, 34, 34)
