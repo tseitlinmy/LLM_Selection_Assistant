@@ -1,6 +1,6 @@
 import streamlit as st
 
-def welcome_page():
+def page():
     # Configure page
     st.set_page_config(page_title="Welcome", layout="wide")
 
@@ -62,9 +62,9 @@ def welcome_page():
     st.markdown('<div class="button-row">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        if st.button("Go to Page2", use_container_width=True):
-            st.switch_page(st.session_state.pages['page2'])
+        if st.button("Start", use_container_width=True):
+            st.switch_page(st.session_state.pages['providers'])  # pass the StreamlitPage object
     st.markdown('</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    welcome_page()
+    page()

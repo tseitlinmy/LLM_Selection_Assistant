@@ -1,23 +1,20 @@
 import streamlit as st
 import welcome
+import providers
+import upload
+import evaluation
 
 if 'pages' not in st.session_state:
     st.session_state.pages = {}
 
-
-def page_2():
-    st.title("Page 2")
-    "Machine learning"
-    if st.button("Go to Welcome"):
-        st.switch_page(st.session_state.pages['welcome'])  # pass the StreamlitPage object
-
-st.session_state.pages['welcome'] = welcome.welcome_page
-st.session_state.pages['page2'] = page_2
-
-st.session_state.pages['welcome'] = st.Page(welcome.welcome_page, title="Welcome")
-st.session_state.pages['page2'] = st.Page(page_2, title="Page 2")
+st.session_state.pages['welcome'] = st.Page(welcome.page, title="Welcome", url_path="Welcome")
+st.session_state.pages['providers'] = st.Page(providers.page, title="Providers", url_path="Providers")
+st.session_state.pages['upload'] = st.Page(upload.page, title="Upload", url_path="Upload")
+st.session_state.pages['evaluation'] = st.Page(evaluation.page, title="Evaluation", url_path="Evaluation") 
 
 pg = st.navigation([st.session_state.pages['welcome'],
-                    st.session_state.pages['page2']], position="hidden")
+                    st.session_state.pages['providers'],
+                    st.session_state.pages['upload'],
+                    st.session_state.pages['evaluation']
+                    ], position="hidden")
 pg.run()
-
