@@ -1,4 +1,5 @@
 import streamlit as st
+import fe
 
 def page():
     # Configure page
@@ -62,7 +63,7 @@ def page():
     st.markdown('<div class="button-row">', unsafe_allow_html=True)
     col1, col2, col3 = st.columns([1, 1, 1])
     with col2:
-        if st.button("Start", use_container_width=True):
+        if fe.button("Start", True):
             st.switch_page(st.session_state.pages['providers'])  # pass the StreamlitPage object
     st.markdown('</div>', unsafe_allow_html=True)
 
