@@ -72,6 +72,32 @@ def button(label: str, isBold: bool = False) -> bool:
     return st.button(label, use_container_width=False)
 
 
+# Should be last call. Because Streamlit draws the page from top to bottom, 
+# and we want the status bar to be at the bottom of the page.
+def statusDisplay():
+    if "sb_text" not in st.session_state:
+        st.session_state.sb_text = "."
+    with st.bottom:
+        st.markdown(
+            f"""
+            <div style="
+                width: 100%;
+                background-color: #66cdaa;
+                text-align: left;
+                margin: 0 4px;
+                border-top: 3px solid #000;
+                padding-left: 4px;
+                box-sizing: border-box;
+            ">{st.session_state.sb_text}</div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+def statusText(text):
+    st.session_state.sb_text = text
+
 if __name__ == "__main__":
+    st.set_page_config(page_title="Test tools", layout="wide")
     if button("Click Me"):
-        st.write("Button clicked!")
+        statusText("Button clicked!")
+    statusDisplay()
