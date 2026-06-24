@@ -1,4 +1,12 @@
 import streamlit as st
+import os
+import sys
+
+def setPath(base_path=None):
+    if base_path is None:
+        base_path = os.path.dirname(sys.argv[0])
+    sys.path.append(os.path.join(base_path, "COMMON"))
+    sys.path.append(os.path.join(base_path, "FE"))
 
 def button(label: str, isBold: bool = False) -> bool:
     weight = "700" if isBold else "400"

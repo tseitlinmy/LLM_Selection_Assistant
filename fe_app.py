@@ -1,4 +1,7 @@
 import streamlit as st
+from FE.fe import setPath as setPath
+setPath()
+
 import welcome
 import providers
 import upload
