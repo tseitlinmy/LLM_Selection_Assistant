@@ -4,7 +4,7 @@ import FE.fe as fe
 if "providers" not in st.session_state:
     st.session_state.providers = {}
 padding = "4px 12px"  # padding for table cells
-colWidths = [0.4, 0.6]  # relative column widths for the table
+colWidths = [0.11, 0.89]  # relative column widths for the table
 
 # ---- Table Rows (using Streamlit columns so we can embed real edit boxes) ----
 def render_row(key): # key is the provider name
