@@ -2,10 +2,10 @@ import streamlit as st
 from FE.fe import setPath as setPath
 setPath()
 
-import welcome_page
-import providers_page
-import upload_page
-import evaluation_page
+import FE.welcome_page as welcome_page
+import FE.providers_page as providers_page
+import FE.upload_page as upload_page
+import FE.evaluation_page as evaluation_page
 
 if 'pages' not in st.session_state:
     st.session_state.pages = {}

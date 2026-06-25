@@ -1,12 +1,20 @@
 import streamlit as st
 import os
 import sys
+from enum import Enum
+
+infoLevel = Enum("infoLevel", "ERROR WARNING INFO DEBUG")
+levelIcon = {
+    infoLevel.ERROR: "❌",
+    infoLevel.WARNING: "⚠️",
+    infoLevel.INFO: "ℹ️",
+    infoLevel.DEBUG: "🐞",
+}
 
 def setPath(base_path=None):
     if base_path is None:
         base_path = os.path.dirname(sys.argv[0])
-    sys.path.append(os.path.join(base_path, "COMMON"))
-    sys.path.append(os.path.join(base_path, "FE"))
+    sys.path.append(base_path)
 
 def button(label: str, isBold: bool = False) -> bool:
     weight = "700" if isBold else "400"
@@ -101,11 +109,11 @@ def statusDisplay():
             unsafe_allow_html=True,
         )
 
-def statusText(text):
-    st.session_state.sb_text = text
+def statusText(text, level=infoLevel.INFO):
+    st.session_state.sb_text = f"{levelIcon[level]} {text}"
 
 if __name__ == "__main__":
     st.set_page_config(page_title="Test tools", layout="wide")
     if button("Click Me"):
-        statusText("Button clicked!")
+        statusText("Button clicked!", infoLevel.INFO)
     statusDisplay()

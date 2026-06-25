@@ -1,5 +1,5 @@
 import streamlit as st
-import fe
+import FE.fe as fe
 
 def page():
     # Configure page
