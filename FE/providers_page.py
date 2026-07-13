@@ -1,8 +1,10 @@
 import streamlit as st
 import FE.fe as fe
+from COMMON.defs import *
 
 if "providers" not in st.session_state:
     st.session_state.providers = {}
+
 padding = "4px 12px"  # padding for table cells
 colWidths = [0.11, 0.89]  # relative column widths for the table
 
@@ -65,8 +67,17 @@ def validate_api_keys():
             provider.apiKey = api_key  # Store the API key in the provider object
     return True
 
-def page():
-    st.set_page_config(page_title="LLM Providers", layout="wide")
+class __LC:
+    pass
+
+@binds_to(__LC)
+def side_area(self):
+    if fe.button("Next", True):
+        if validate_api_keys():
+            st.switch_page(st.session_state.pages['upload'])  # pass the StreamlitPage object
+
+@binds_to(__LC)
+def main_area(self):
     st.title("LLM Providers")
 
     # ---- CSS for table styling ----
@@ -125,10 +136,17 @@ def page():
             render_row(provider.name)
         else:
             render_non_implemented(provider.name)
+    st.markdown("<br>", unsafe_allow_html=True)
 
-    if fe.button("Next", True):
-        if validate_api_keys():
-            st.switch_page(st.session_state.pages['upload'])  # pass the StreamlitPage object
+def page():
+    fe.page_init("LLM Providers")
+    intr = __LC()
+
+    cMain, cSide = st.columns([0.85, 0.15], vertical_alignment="center", border=True)
+    with cMain:
+        intr.main_area()
+    with cSide:
+        intr.side_area()
 
     fe.statusDisplay()  # Display the status bar at the bottom of the page
 

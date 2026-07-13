@@ -16,7 +16,7 @@ def setPath(base_path=None):
         base_path = os.path.dirname(sys.argv[0])
     sys.path.append(base_path)
 
-def button(label: str, isBold: bool = False) -> bool:
+def button(label: str, isBold: bool = False, use_container_width: bool = False) -> bool:
     weight = "700" if isBold else "400"
 
     # Custom CSS for the button
@@ -85,14 +85,18 @@ def button(label: str, isBold: bool = False) -> bool:
     """, unsafe_allow_html=True)
 
     # Create the button
-    return st.button(label, use_container_width=False)
+    return st.button(label, use_container_width = use_container_width)
 
+def statusText(text, level=infoLevel.INFO):
+    st.session_state.sb_text = f"{levelIcon[level]} {text}"
+def statusClear():
+    st.session_state.sb_text = "&nbsp;"
 
 # Should be last call. Because Streamlit draws the page from top to bottom, 
 # and we want the status bar to be at the bottom of the page.
 def statusDisplay():
     if "sb_text" not in st.session_state:
-        st.session_state.sb_text = "."
+        statusClear()
     with st.bottom:
         st.markdown(
             f"""
@@ -109,8 +113,9 @@ def statusDisplay():
             unsafe_allow_html=True,
         )
 
-def statusText(text, level=infoLevel.INFO):
-    st.session_state.sb_text = f"{levelIcon[level]} {text}"
+def page_init(page_title):
+    st.set_page_config(page_title=page_title, layout="wide")
+    statusClear()  # Clear the status bar at the bottom of the page
 
 if __name__ == "__main__":
     st.set_page_config(page_title="Test tools", layout="wide")
