@@ -20,6 +20,36 @@ def side_area(self):
                 if self.validate():
                     st.switch_page(st.session_state.pages['evaluation'])  # pass the StreamlitPage object
 
+def showCopyableText(text: str, id: int):
+        ifCopy = st.button("", icon=":material/content_copy:", 
+                           type="primary", help="Copy to clipboard", key="copy_btn" + str(id))
+        st.html(text)
+
+        text = text.replace('<br>', "")
+        text = text.replace('&nbsp;', " ")
+        if ifCopy:
+            st.html(
+                f'''
+                <script>
+                async function copyText() {{
+                    const txt = `{text}`;
+                    try {{
+                        await navigator.clipboard.writeText(txt);
+                    }} catch (err) {{
+                        const el = document.createElement('textarea');
+                        el.value = txt;
+                        document.body.appendChild(el);
+                        el.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(el);
+                    }}
+                }}
+                copyText();
+                </script>
+                ''',
+                unsafe_allow_javascript=True,
+            )
+
 @binds_to(__LC)
 def main_area(self):
     st.markdown(
@@ -67,15 +97,15 @@ def main_area(self):
             unsafe_allow_html=True,
     )
     with st.expander('"LLM Internal Tools Checking" prompt prefix'):
-        st.html(''' 
+        showCopyableText(''' 
 What internal tools will be called to perform the below PROMPT?<br>
 * If internal tools WILL BE CALLED - Give the list of called tools (one tool one line)<br>
 * If internal tools WILL NOT BE CALLED - the answer should be: "No internal tools will be called".<br>
 <br>
 PROMPT:
-    ''')
+    ''', id=1)
     with st.expander('"Tools dumping" prompt prefix'):
-        st.html('''
+        showCopyableText('''
 Answer the PROMPT adhering to the following rules:<br>
 GOAL: To gather information required for PROMPT debugging.<br>
 <br>
@@ -95,7 +125,7 @@ Strict Rule:<br>
 * Do not internalize tool outputs into your prose until they have been "dumped" into the TOOL_FACTS section first.<br>
 <br>
 PROMPT:
-    ''')
+    ''', id=2)
 
     # Define your custom CSS to target the file uploader dropzone
     custom_css = """
