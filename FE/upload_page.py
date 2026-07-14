@@ -98,12 +98,24 @@ def main_area(self):
     )
     with st.expander('"LLM Internal Tools Checking" prompt prefix'):
         showCopyableText(''' 
-What internal tools will be called to perform the below PROMPT?<br>
-* If internal tools WILL BE CALLED - Give the list of called tools (one tool one line)<br>
-* If internal tools WILL NOT BE CALLED - the answer should be: "No internal tools will be called".<br>
+We use "BIT" as abbreviature for "built-in or internal tool".<br>
 <br>
-PROMPT:
-    ''', id=1)
+What BITs will be called to perform the below PROMPT?<br>
+* If BIT WILL BE CALLED:<br>
+&nbsp;&nbsp;- Print line: ### BUILD-IN TOOLS INFO:<br>
+&nbsp;&nbsp;- Give the list of called BITs. Where information about BIT is displayed in format:<br>
+&nbsp;&nbsp;# BUILD-IN TOOL DESCRIPTION START<br>
+&nbsp;&nbsp;TOOL NAME: specific BIT name<br>
+&nbsp;&nbsp;TOOL DESCRIPTION: specific BIT description string<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Give CONSIZE description of the tool.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Do not need to give examples of use)<br>
+&nbsp;&nbsp;# BUILD-IN TOOL DESCRIPTION END<br>
+&nbsp;&nbsp;Empty line<br>
+<br>
+* If BIT WILL NOT BE CALLED - the answer should be: "### NO BUILD-IN TOOLS WERE CALLED".<br>
+<br>
+PROMPT:<br>
+                         ''', id=1)
     with st.expander('"Tools dumping" prompt prefix'):
         showCopyableText('''
 Answer the PROMPT adhering to the following rules:<br>
