@@ -96,7 +96,7 @@ def main_area(self):
             </TD></TR></table>''',
             unsafe_allow_html=True,
     )
-    with st.expander('"LLM Built-In Tools Checking" prompt prefix'):
+    with st.expander('"LLM Built-In Tools checking" prompt prefix'):
         showCopyableText(''' 
 We use "BIT" as abbreviature for "built-in or internal tool".<br>
 <br>
