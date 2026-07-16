@@ -96,23 +96,23 @@ def main_area(self):
             </TD></TR></table>''',
             unsafe_allow_html=True,
     )
-    with st.expander('"LLM Internal Tools Checking" prompt prefix'):
+    with st.expander('"LLM Built-In Tools Checking" prompt prefix'):
         showCopyableText(''' 
 We use "BIT" as abbreviature for "built-in or internal tool".<br>
 <br>
 What BITs will be called to perform the below PROMPT?<br>
 * If BIT WILL BE CALLED:<br>
-&nbsp;&nbsp;- Print line: ### BUILD-IN TOOLS INFO:<br>
+&nbsp;&nbsp;- Print line: ### BUILT-IN TOOLS INFO:<br>
 &nbsp;&nbsp;- Give the list of called BITs. Where information about BIT is displayed in format:<br>
-&nbsp;&nbsp;# BUILD-IN TOOL DESCRIPTION START<br>
+&nbsp;&nbsp;# BUILT-IN TOOL DESCRIPTION START<br>
 &nbsp;&nbsp;TOOL NAME: specific BIT name<br>
 &nbsp;&nbsp;TOOL DESCRIPTION: specific BIT description string<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Give CONSIZE description of the tool.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Do not need to give examples of use)<br>
-&nbsp;&nbsp;# BUILD-IN TOOL DESCRIPTION END<br>
+&nbsp;&nbsp;# BUILT-IN TOOL DESCRIPTION END<br>
 &nbsp;&nbsp;Empty line<br>
 <br>
-* If BIT WILL NOT BE CALLED - the answer should be: "### NO BUILD-IN TOOLS WERE CALLED".<br>
+* If BIT WILL NOT BE CALLED - the answer should be: "### NO BUILT-IN TOOLS WERE CALLED".<br>
 <br>
 PROMPT:<br>
                          ''', id=1)
