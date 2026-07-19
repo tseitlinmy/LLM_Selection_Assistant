@@ -92,7 +92,7 @@ def main_area(self):
             <span style="font-size: 24px;font-weight: bold;">Useful Information:</span>
             <table style="width:100%; border-collapse: collapse; border: 2px solid #D0D7E5;">
             <TR><TD class="tbl-line" style="margin-top: 0; margin-bottom: 0;">
-                &nbsp;&nbsp;&nbsp;&gt; &nbsp; <a href="https://www.google.com"  target="_blank">Short explanation & detailed help</a>
+                &nbsp;&nbsp;&nbsp;&gt; &nbsp; <a href="app/static/EDS_gathering.html"  target="_blank">Short explanation & detailed help</a>
             </TD></TR></table>''',
             unsafe_allow_html=True,
     )

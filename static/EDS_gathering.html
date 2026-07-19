@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>"Evaluation Set" Upload Help</title>
+  <link rel="icon" type="image/png" href="favicon.png">
+  <style>
+    html {
+      color: #1a1a1a;
+      background-color: #fdfdfd;
+    }
+        /* Define the regular font */
+        @font-face {
+            font-family: 'IBM Plex Sans';
+            src: url('ibmplexsans-regular.woff2') format('woff2');
+            font-weight: 400;
+            font-style: normal;
+            font-display: swap;
+        }
+
+        /* Define the semibold (bold) font */
+        @font-face {
+            font-family: 'IBM Plex Sans';
+            src: url('ibmplexsans-semibold.woff') format('woff');
+            font-weight: 600;
+            font-style: normal;
+            font-display: swap;
+        }
+    body {
+      margin: 0 auto;
+      max-width: 36em;
+      padding-left: 50px;
+      padding-right: 50px;
+      padding-top: 50px;
+      padding-bottom: 50px;
+      hyphens: auto;
+      overflow-wrap: break-word;
+      text-rendering: optimizeLegibility;
+      font-family: -apple-system, BlinkMacSystemFont, 'IBM Plex Sans', Roboto, Helvetica, Arial, sans-serif;
+      font-kerning: normal;
+    }
+    @media (max-width: 600px) {
+      body {
+        font-size: 0.9em;
+        padding: 12px;
+      }
+      h1 {
+        font-size: 1.8em;
+      }
+    }
+    @media print {
+      html {
+        background-color: white;
+      }
+      body {
+        background-color: transparent;
+        color: black;
+        font-size: 12pt;
+      }
+      p, h2, h3 {
+        orphans: 3;
+        widows: 3;
+      }
+      h2, h3, h4 {
+        page-break-after: avoid;
+      }
+    }
+    p {
+      margin: 1em 0;
+    }
+    a {
+      color: #1a1a1a;
+    }
+    a:visited {
+      color: #1a1a1a;
+    }
+    img {
+      max-width: 100%;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      margin-top: 1.4em;
+    }
+    h5, h6 {
+      font-size: 1em;
+      font-style: italic;
+    }
+    h6 {
+      font-weight: normal;
+    }
+    ol, ul {
+      padding-left: 1.7em;
+      margin-top: 1em;
+    }
+    li > ol, li > ul {
+      margin-top: 0;
+    }
+    blockquote {
+      margin: 1em 0 1em 1.7em;
+      padding-left: 1em;
+      border-left: 2px solid #e6e6e6;
+      color: #606060;
+    }
+    code {
+      font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+      font-size: 85%;
+      margin: 0;
+      hyphens: manual;
+    }
+    pre {
+      margin: 1em 0;
+      overflow: auto;
+    }
+    pre code {
+      padding: 0;
+      overflow: visible;
+      overflow-wrap: normal;
+    }
+    .sourceCode {
+     background-color: transparent;
+     overflow: visible;
+    }
+    hr {
+      background-color: #1a1a1a;
+      border: none;
+      height: 1px;
+      margin: 1em 0;
+    }
+    table {
+      margin: 1em 0;
+      border-collapse: collapse;
+      width: 100%;
+      overflow-x: auto;
+      display: block;
+      font-variant-numeric: lining-nums tabular-nums;
+    }
+    table caption {
+      margin-bottom: 0.75em;
+    }
+    tbody {
+      margin-top: 0.5em;
+      border-top: 1px solid #1a1a1a;
+      border-bottom: 1px solid #1a1a1a;
+    }
+    th {
+      border-top: 1px solid #1a1a1a;
+      padding: 0.25em 0.5em 0.25em 0.5em;
+    }
+    td {
+      padding: 0.125em 0.5em 0.25em 0.5em;
+    }
+    header {
+      margin-bottom: 4em;
+      text-align: center;
+    }
+    #TOC li {
+      list-style: none;
+    }
+    #TOC ul {
+      padding-left: 1.3em;
+    }
+    #TOC > ul {
+      padding-left: 0;
+    }
+    #TOC a:not(:hover) {
+      text-decoration: none;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+<h1 id="llm-call-evaluation-dataset-data-gathering">LLM call Evaluation
+Dataset data gathering</h1>
+<h2 id="problem-statement">Problem statement</h2>
+<p>We have LLM call which uses specified model and it works right. We'll
+name this model as "<strong><u>initial model</strong></u>" and this LLM
+call as "<u><strong>LLM call</strong></u>". But we are not satisfied
+initial model's characteristics: "response time" or cost.</p>
+<h2 id="what-is-evaluation-dataset">What is Evaluation Dataset</h2>
+<p>We want to select another model that offers the best balance of
+performance and cost for a given LLM call. To do this, we should rely on
+the actual prompts that this call will send to the LLM. This set of
+prompts (we will call it the <u><strong>"Evaluation
+Dataset"</strong></u>) should be sufficiently representative to yield
+trustworthy statistics for each tested model. We will calculate key
+metrics: <strong>"<u>average response time</u>"</strong> and
+<strong>"<u>average cost per prompt</u>"</strong> and compare them to
+select the model with the characteristics best suited to our needs.</p>
+<h2 id="tools-support">Tools support</h2>
+<p>Concerning tools usage - there may be following possibilities:</p>
+<ul>
+<li>given LLM call does not use tools at all</li>
+<li>the LLM call <strong>uses tools explicitly</strong></li>
+<li>the initial model <strong>calls built-in tools
+implicitly</strong></li>
+</ul>
+<p>Correspondingly:</p>
+<ul>
+<li>To support <strong>explicit tools calling</strong> in evaluation, need to have tools calling dump for each prompt in Evaluation Dataset.</li>
+<li>To support <strong>implicit built-in tools
+calling</strong> in evaluation, need to detect which built-in
+tools are used and to use exclusively those models that support these
+tools.</li>
+</ul>
+<p>Then answer for each prompt from the Evaluation Dataset should
+contain information about built-in tools calling and dump of explicit
+tools calling (if this LLM call has tools list).</p>
+<h2 id="evaluation-dataset-preparation">Evaluation Dataset preparation</h2>
+<ol type="1">
+<li>Create dataset directory (mkdir dataset). All Evaluation
+Dataset files will be saved in this directory.</li>
+<li>Save system prompt of this LLM call into system_prompt.txt
+</li>
+<li>Now we need to fix system prompt of this LLM call to dump
+usage of tools. 
+<ul>
+<li>If this LLM call uses <strong>external tools</strong>: prefix the system prompt with <b>"Tools dumping" prompt prefix</b>. Expand <b>"Tools dumping" prompt prefix</b> item in the application and press "Copy to clipboard" button
+– the prefix in clipboard now. You may use it.</li>
+<li>If this LLM call does not use <strong>external tools</strong> 
+– it may use built-in tools of the initial model anyway. So prefix the system prompt with <strong>"LLM Built-In Tools checking</strong>" prompt prefix. 
+Expand <strong>"LLM Built-In Tools checking" prompt prefix</strong> item in the
+application and press "Copy to clipboard" button – the prefix in
+clipboard now. You may use it.</li>
+</ul></li>
+<li>After the system prompt was fixed, launch set of user prompts
+(~ 20-50 prompts) on this LLM call. 
+<ul>
+<li>You need save each user prompt in files: user_prompt00.txt,
+user_prompt01.txt, user_prompt02.txt, ... </li>
+<li>You need save each LLM answer in files: answer00.txt,
+answer01.txt, answer02.txt, ... </li>
+</ul></li>
+<li>Compress dataset directory into zip archive file
+(dataset.zip)</li>
+<li>Upload dataset.zip to application by 'Upload "Evaluation Set"
+File' button pressing.</li>
+</ol>
+<p>Press "Evaluate" button in the application to start dataset evaluation process.</p>
+</body>
+</html>
