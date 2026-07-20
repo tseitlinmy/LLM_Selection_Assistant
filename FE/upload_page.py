@@ -1,17 +1,101 @@
+import zipfile
+from scipy.fft import dst
 import streamlit as st
 from COMMON.defs import *
+from COMMON.base_classes import WorkArea
 import FE.fe as fe
 from FE.providers_page import validate_api_keys
+import os
+import shutil
+from pathlib import Path
 
 class __LC:
     def __init__(self):
         self.uploaded_file = None
 
-    def validate(self):
-        if self.uploaded_file is None:
-            fe.statusText("No file uploaded.", fe.infoLevel.ERROR)
-            return False
-        return True
+@binds_to(__LC)
+def unzip_and_validate_structure(self, wa, zfn):
+
+    ds_path = os.path.join(wa.path, "dataset")
+    if os.path.exists(ds_path) and (not os.path.isdir(ds_path)):
+        os.remove(ds_path)  # Remove the file if it exists and is not a directory
+    if not os.path.exists(ds_path):
+        for item in Path(wa.path).iterdir():
+            if item.is_dir():
+                try:
+                    shutil.move(os.path.join(wa.path, item.name), ds_path)
+                    wa.eds_path = ds_path
+                    break
+                except:
+                    fe.statusText(f"Failed to move '{item.name}' directory to 'dataset'.", fe.infoLevel.ERROR)
+                    return False
+            else:
+                fe.statusText(f"Invalid structure in the unzipped file '{zfn}'. The top-level item must be a directory.", fe.infoLevel.ERROR)
+                return False
+            
+    # check if eds_path contains system prompt file and evaluation dataset
+    if not self.validate_structure(ds_path):
+        return False
+    return True
+
+@binds_to(__LC)
+def validate_structure(self, dsPath: str) -> bool:
+    ds_path = Path(dsPath)
+    system_prompt_file = os.path.join(ds_path, "system_prompt.txt")
+    if not os.path.isfile(system_prompt_file):
+        fe.statusText(f"Uploaded dataset is missing 'system_prompt.txt'.", fe.infoLevel.ERROR)
+        return False
+
+    prompts = set()
+    answers = set()
+
+    for item in ds_path.iterdir():
+        if item.is_file():
+            name = item.name
+            if name.startswith("user_prompt") and name.endswith(".txt"):
+                key = name[len("user_prompt"):-len(".txt")]
+                prompts.add(key)
+            elif name.startswith("answer"):
+                key = name[len("answer"):-len(".txt")]
+                answers.add(key)
+
+    if len(prompts) == 0:
+        fe.statusText("No prompts were detected.", fe.infoLevel.ERROR)
+        return False
+
+    if len(prompts - answers) > 0:
+        fe.statusText("Not all prompts are answered.", fe.infoLevel.ERROR)
+        return False
+
+    return True
+
+@binds_to(__LC)
+def validate(self):
+    if self.uploaded_file is None:
+        fe.statusText("No file uploaded.", fe.infoLevel.ERROR)
+        return False
+    
+    zfn = self.uploaded_file.name.lower() # zip file name
+    if not (zfn.endswith('.zip')):
+        fe.statusText("Only .zip files are allowed.", fe.infoLevel.ERROR)
+        return False
+
+    wa = WorkArea()  # Create a new WorkArea instance
+    st.session_state.oEDS = wa  # Store the WorkArea instance in session state
+    zip_file_path = os.path.join(wa.path, f"{zfn}")
+    with open(zip_file_path, "wb") as f:
+        f.write(self.uploaded_file.getbuffer())
+    
+    # Unzip the file
+    try:
+        with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+            zip_ref.extractall(wa.path)
+    except zipfile.BadZipFile:
+        fe.statusText(f"Failed to unzip the file '{zfn}'. It may be corrupted.", fe.infoLevel.ERROR)
+        return False
+
+    os.remove(zip_file_path)  # Remove the zip file after extraction
+    return self.unzip_and_validate_structure(wa, zfn)
 
 @binds_to(__LC)
 def side_area(self):
