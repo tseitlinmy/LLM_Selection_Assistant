@@ -15,7 +15,6 @@ class __LC:
 
 @binds_to(__LC)
 def unzip_and_validate_structure(self, wa, zfn):
-
     ds_path = os.path.join(wa.path, "dataset")
     if os.path.exists(ds_path) and (not os.path.isdir(ds_path)):
         os.remove(ds_path)  # Remove the file if it exists and is not a directory
