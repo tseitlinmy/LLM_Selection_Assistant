@@ -100,8 +100,8 @@ def validate(self):
 def side_area(self):
     btnEvaluate = fe.button("Evaluate", True, use_container_width=True)
     if btnEvaluate:
-                if self.validate():
-                    st.switch_page(st.session_state.pages['evaluation'])  # pass the StreamlitPage object
+        if self.validate():
+            st.switch_page(st.session_state.pages['evaluation'])  # pass the StreamlitPage object
 
 def showCopyableText(text: str, id: int):
         ifCopy = st.button("", icon=":material/content_copy:", 
@@ -190,7 +190,7 @@ What BITs will be called to perform the below PROMPT?<br>
 &nbsp;&nbsp;# BUILT-IN TOOL DESCRIPTION START<br>
 &nbsp;&nbsp;TOOL NAME: specific BIT name<br>
 &nbsp;&nbsp;TOOL DESCRIPTION: specific BIT description string<br>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Give CONSIZE description of the tool.<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Give CONCISE description of the tool.<br>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(Do not need to give examples of use)<br>
 &nbsp;&nbsp;# BUILT-IN TOOL DESCRIPTION END<br>
 &nbsp;&nbsp;Empty line<br>

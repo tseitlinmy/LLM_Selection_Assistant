@@ -2,6 +2,7 @@ import streamlit as st
 import os
 import sys
 from enum import Enum
+from COMMON.defs import *
 
 infoLevel = Enum("infoLevel", "ERROR WARNING INFO DEBUG")
 levelIcon = {
@@ -16,14 +17,24 @@ def setPath(base_path=None):
         base_path = os.path.dirname(sys.argv[0])
     sys.path.append(base_path)
 
-def button(label: str, isBold: bool = False, use_container_width: bool = False, id: int = 0) -> bool:
-    weight = "700" if isBold else "400"
+class ButtonStyle:
+    def __init__(self, id: int, isBold: bool = False):
+        self.id = id
+        self.isBold = isBold
+        self.apply()  # Apply the style when the object is created
+
+    def key(self):
+        return f"btn{self.id}"
+
+@binds_to(ButtonStyle)
+def apply(self):
+    weight = "700" if self.isBold else "400"
 
     # Custom CSS for the button
     st.markdown("""
     <style>
     /* Target the button container */
-    div.st-key-btn""" + str(id) + """ button {
+    div.st-key-btn""" + str(self.id) + """ button {
         background-color: #7E3D01 !important;
         color: #DDD9C3 !important;
         
@@ -51,7 +62,7 @@ def button(label: str, isBold: bool = False, use_container_width: bool = False, 
         white-space: nowrap !important;
     }
 
-    div.st-key-btn""" + str(id) + """ button p {
+    div.st-key-btn""" + str(self.id) + """ button p {
         /* Typography */
         font-family: "Arial", sans-serif;
         font-size: 26px !important;
@@ -59,33 +70,36 @@ def button(label: str, isBold: bool = False, use_container_width: bool = False, 
     }
 
     /* Hover effect */
-    div.st-key-btn""" + str(id) + """ button:hover {
+    div.st-key-btn""" + str(self.id) + """ button:hover {
         background-color: #9A4D02 !important;
         transform: scale(1.02) !important;
         box-shadow: 0 4px 15px rgba(126, 61, 1, 0.4) !important;
     }
 
     /* Active/click effect */
-    div.st-key-btn""" + str(id) + """ button:active {
+    div.st-key-btn""" + str(self.id) + """ button:active {
         transform: scale(0.98) !important;
     }
 
     /* Focus state for accessibility */
-    div.st-key-btn""" + str(id) + """ button:focus {
+    div.st-key-btn""" + str(self.id) + """ button:focus {
         outline: 2px solid #DDD9C3 !important;
         outline-offset: 2px !important;
     }
 
     /* Ensure container doesn't add extra margins */
-    div.st-key-btn""" + str(id) + """ {
+    div.st-key-btn""" + str(self.id) + """ {
         margin: 0 !important;
         padding: 0 !important;
     }
     </style>
     """, unsafe_allow_html=True)
 
+def button(label: str, isBold: bool = False, use_container_width: bool = False, id: int = 0) -> bool:
+    btnStyle = ButtonStyle(id, isBold)
+
     # Create the button
-    return st.button(label, use_container_width = use_container_width, key="btn" + str(id))
+    return st.button(label, use_container_width = use_container_width, key=btnStyle.key())
 
 def statusText(text, level=infoLevel.INFO):
     st.session_state.sb_text = f"{levelIcon[level]} {text}"
